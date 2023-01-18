@@ -1,0 +1,28 @@
+public static void postUser(){
+
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint('https://gorest.co.in/public/v2/users');
+        request.setMethod('POST');
+        request.setHeader('Content-Type' , 'application/json');
+        request.setHeader('Authorization', 'Bearer dc47985052ee553ced5b7402e7499cc2615d31dceb0e7a19221ba5301b7e6588');
+        request.setBody('{"name":"Selim", "email":"selim@icloud.co", "gender":"male", "status":"inactive"}');
+        HttpResponse response = http.send(request);
+        if(response.getStatusCode()==201){
+            System.debug(response.getBody());
+            goRest user = (goRest) JSON.deserialize(response.getBody(), goRest.class);
+            Contact con = new Contact();
+            con.LastName = user.name;
+            con.Email = user.email;
+            insert con;
+            System.debug(con);
+          }
+     }
+     
+    public class goRest {
+        public Integer id;
+        public String name;
+        public String gender;
+        public String status;
+        public String email;
+    }
